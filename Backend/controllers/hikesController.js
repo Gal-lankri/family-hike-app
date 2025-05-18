@@ -26,7 +26,20 @@ async function getHikeById(req, res) {
   }
 }
 
+// Function to add a new hike
+async function createHike(req, res) {
+  const { name, location, distance, difficulty } = req.body;
+  try {
+    const newHike = await hikeModel.addHike({ name, location, distance, difficulty });
+    res.status(201).json(newHike);
+  } catch (error) {
+    console.error("Error adding hike:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 export default {
   getAllHikes,
   getHikeById,
+  createHike
 };
