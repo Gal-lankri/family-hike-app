@@ -2,8 +2,7 @@ import React from "react";
 
 function navbar() {
   return (
-
-      <nav className="p-4 container mx-auto flex justify-between items-center ">
+      <nav className="p-4 w-full shrink-0 h-16  flex justify-between items-center">
         <div className=" text-2xl font-bold">Hiking App</div>
         <ul className="flex space-x-4">
           <li>
