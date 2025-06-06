@@ -4,7 +4,8 @@ const HIKES_API_URL = '/hikes';
 
 export const hikeService = {
     getHikes,
-    getHikeById
+    getHikeById,
+    getHikeFromAi
 };
 /**
  * Hike Service
@@ -30,4 +31,15 @@ async function getHikeById(id) {
         console.error(`Error fetching hike with ID ${id}:`, error);
         throw error;
     }
+}
+
+async function getHikeFromAi(prompt) {
+    try {
+        const response = await http.post(`${HIKES_API_URL}/ai`, { prompt });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching hike from AI:', error);
+        throw error;
+    }
+    
 }

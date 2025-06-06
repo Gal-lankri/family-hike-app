@@ -21,8 +21,43 @@ async function addHike(hike){
   return result.insertId
 }
 
+// get filtered hikes from the database
+/* ------------------------------------------------------------------ */
+/*  Flexible filter query                                             */
+/* ------------------------------------------------------------------ */
+async function getFilteredHikesFromDB(filters = {}) {
+  const { location, difficulty, minLengthKm, maxLengthKm } = filters;
+
+  let sql    = 'SELECT * FROM hikes WHERE 1=1';
+  const args = [];
+
+  if (location) {
+    sql += ' AND location = ?';
+    args.push(location);
+  }
+
+  if (difficulty) {
+    sql += ' AND difficulty = ?';
+    args.push(difficulty);
+  }
+
+  if (minLengthKm) {
+    sql += ' AND length_km >= ?';
+    args.push(Number(minLengthKm));
+  }
+
+  if (maxLengthKm) {
+    sql += ' AND length_km <= ?';
+    args.push(Number(maxLengthKm));
+  }
+
+  const [rows] = await pool.query(sql, args);
+  return rows;
+}
+
 export default {
   getAllHikes,
   getHikeById,
-  addHike
+  addHike,
+  getFilteredHikesFromDB
 };
